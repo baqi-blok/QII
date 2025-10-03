@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Selamat Ulang Tahun Dede 🎂</title>
+  <style>
+    /* Reset ringan */
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;padding:0}
+
+    /* Latar & layout */
+    body{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      text-align:center;
+      font-family: 'Comic Sans MS', system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: radial-gradient(circle at 50% 30%, #0b1736 0%, #060914 70%);
+      color:#fff;
+      overflow:hidden;
+      padding:30px;
+    }
+
+    /* Judul */
+    h1{
+      font-size:2.6rem;
+      margin:12px 0 8px;
+      animation: glow 2.4s ease-in-out infinite alternate;
+    }
+    p.lead{ margin:6px 0 18px; color:#dbeefc; font-size:1.05rem }
+
+    @keyframes glow{
+      from { text-shadow: 2px 2px 8px #ff9aa2; }
+      to   { text-shadow: 2px 2px 20px #c3ff8a; }
+    }
+
+    /* Konfeti - banyak titik bergerak */
+    .confetti {
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:5;
+    }
+    .confetti span{
+      position:absolute;
+      width:10px; height:14px;
+      background:var(--c, #ffdd57);
+      opacity:0.95;
+      transform: translateY(-120vh) rotate(0deg);
+      animation: confetti-fall linear infinite;
+      border-radius:2px;
+    }
+    @keyframes confetti-fall{
+      0%{ transform: translateY(-20vh) rotate(0deg); opacity:1; }
+      100%{ transform: translateY(120vh) rotate(540deg); opacity:0.9; }
+    }
+
+    /* Area kue */
+    .stage{
+      position:relative;
+      width:min(820px, 96%);
+      max-width:980px;
+      margin-top:6px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:26px;
+      align-items:start;
+      z-index:10;
+    }
+
+    /* Box kanan: kue */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:16px;
+      padding:18px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow:0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    .cake-wrap{
+      display:flex; align-items:center; justify-content:center; padding:8px;
+      background: radial-gradient(60% 40% at 30% 20%, rgba(255,255,255,0.02), transparent);
+      border-radius:12px;
+    }
+
+    /* Animasi lilin berkedip */
+    .flame{
+      transform-origin: center bottom;
+      animation: flicker 0.18s infinite;
+    }
+    @keyframes flicker{
+      0% { transform: scaleY(1) translateY(0); opacity:1 }
+      50%{ transform: scaleY(0.88) translateY(1px); opacity:0.9 }
+      100%{ transform: scaleY(1) translateY(0); opacity:1 }
+    }
+
+    /* Balon */
+    .balloons{ position:relative; height:300px }
+    .balloon{
+      position:absolute; width:72px; height:94px; border-radius:50% 50% 46% 46%;
+      transform-origin:center bottom;
+      animation: float 6s ease-in-out infinite;
+      display:flex; align-items:flex-end; justify-content:center;
+    }
+    .balloon::after{
+      content:""; width:2px; height:44px; background:rgba(255,255,255,0.12);
+      display:block; margin-bottom:-30px;
+    }
+    @keyframes float{
+      0%{ transform: translateY(0) }
+      50%{ transform: translateY(-28px) rotate(-4deg) }
+      100%{ transform: translateY(0) }
+    }
+
+    /* Tombol / link */
+    .actions{ margin-top:14px; display:flex; gap:10px; justify-content:center }
+    .btn{
+      padding:10px 16px; border-radius:10px; font-weight:700; text-decoration:none; color:#081022; background:linear-gradient(90deg,#ffd27a,#ff9a66); box-shadow:0 8px 20px rgba(255,150,80,0.12)
+    }
+    .call{ background:transparent; color:#dbeefc; border:1px solid rgba(255,255,255,0.06); padding:10px 14px; border-radius:10px; text-decoration:none }
+
+    /* Responsive: kalau sempit, susun vertikal */
+    @media (max-width:880px){
+      .stage{ grid-template-columns: 1fr; }
+      .balloons{ height:200px }
+    }
+
+    /* tambahan estetika teks kecil */
+    .note{ color:#bcd6f2; font-size:0.95rem; margin-top:10px }
+  </style>
+</head>
+<body>
+
+  <!-- konfeti (dihasilkan oleh JS) -->
+  <div class="confetti" id="confetti"></div>
+
+  <h1>🎉 Selamat Ulang Tahun, Dedeeee!</h1>
+  <p class="lead">Semoga sehat selalu, semua harapan terkabul, dan makin sukses. jangan tinggalin aa yaaa 🎂✨</p>
+
+  <div class="stage">
+
+    <!-- Kiri: pesan & balon -->
+    <div>
+      <div class="balloons" aria-hidden="true">
+        <!-- balon SVG, beberapa dengan warna dan delay -->
+        <svg class="balloon" style="left:10%; top:10%; animation-duration:5.8s" viewBox="0 0 100 130" width="72" height="94">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#ff9aa2"/><stop offset="1" stop-color="#ff7a8a"/></linearGradient>
+          </defs>
+          <ellipse cx="50" cy="45" rx="36" ry="44" fill="url(#g1)"/>
+        </svg>
+
+        <svg class="balloon" style="left:28%; top:30%; animation-duration:6.6s" viewBox="0 0 100 130" width="60" height="78">
+          <defs><linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ffd66b"/></linearGradient></defs>
+          <ellipse cx="50" cy="45" rx="30" ry="36" fill="url(#g2)"/>
+        </svg>
+
+        <svg class="balloon" style="left:64%; top:6%; animation-duration:5.2s" viewBox="0 0 100 130" width="76" height="98">
+          <defs><linearGradient id="g3" x1="0" x2="1"><stop offset="0" stop-color="#9be7ff"/><stop offset="1" stop-color="#7ad0ff"/></linearGradient></defs>
+          <ellipse cx="50" cy="45" rx="36" ry="44" fill="url(#g3)"/>
+        </svg>
+      </div>
+
+      <div class="card" aria-label="Ucapan">
+        <h2 style="margin:8px 0 6px;color:#fff">Untuk Dede</h2>
+        <p style="color:#cfe9ff">Semoga senantiasa diberi kesehatan, kebahagiaan, dan cinta aa Terus sampai tua nantii!!!a!</p>
+
+        <div class="actions">
+          <!-- ganti nomor di href kalau perlu (format internasional tanpa +) -->
+          <a class="btn" href="https://wa.me/6283897303774" target="_blank" rel="noopener">Chat kalo pengen nangis</a>
+          <a class="call" href="https://wa.me/6283897303774">telfon</a>
+        </div>
+
+        <p class="note">Wa aa kalo kangen</p>
+      </div>
+    </div>
+
+    <!-- Kanan: Kue -->
+    <div class="card cake-wrap" aria-hidden="false">
+      <!-- Simple SVG cake dengan lilin -->
+      <svg width="380" height="300" viewBox="0 0 380 300" xmlns="http://www.w3.org/2000/svg" aria-label="Kue ulang tahun">
+        <!-- dasar piring -->
+        <ellipse cx="190" cy="270" rx="140" ry="18" fill="#123044" opacity="0.12"/>
+        <!-- lapisan bawah -->
+        <rect x="60" y="120" width="260" height="80" rx="22" fill="#ffb86b"/>
+        <!-- lapisan krim -->
+        <path d="M60 120 q40 -30 80 0 t80 0 t80 0 v16 h-240 z" fill="#fff4e6" opacity="0.95"/>
+        <!-- lapisan atas -->
+        <rect x="90" y="70" width="200" height="90" rx="20" fill="#ff7a59"/>
+        <!-- hiasan titik -->
+        <g fill="#fff8e6">
+          <circle cx="120" cy="110" r="6"/>
+          <circle cx="160" cy="95" r="6"/>
+          <circle cx="200" cy="110" r="6"/>
+          <circle cx="240" cy="95" r="6"/>
+        </g>
+
+        <!-- lilin 1 -->
+        <g transform="translate(150,40)">
+          <rect x="0" y="30" width="10" height="40" rx="3" fill="#ffe27a"/>
+          <path class="flame" d="M5 8 C2 12, 2 18, 5 22 C8 18, 8 12, 5 8 Z" fill="#ffd27a" transform="translate(0,0)"/>
+          <path d="M5 4 C4 6, 4 9,5 11 C6 9,6 6,5 4 Z" fill="#ffb86b" transform="translate(0,-2)"/>
+        </g>
+
+        <!-- lilin 2 -->
+        <g transform="translate(210,40)">
+          <rect x="0" y="30" width="10" height="40" rx="3" fill="#ffe27a"/>
+          <path class="flame" d="M5 8 C2 12, 2 18, 5 22 C8 18, 8 12, 5 8 Z" fill="#ffd27a"/>
+          <path d="M5 4 C4 6, 4 9,5 11 C6 9,6 6,5 4 Z" fill="#ffb86b" transform="translate(0,-2)"/>
+        </g>
+
+        <!-- teks di kue -->
+        <text x="190" y="175" text-anchor="middle" fill="#081022" font-weight="700" font-size="20">HAPPY BIRTHDAY</text>
+        <text x="190" y="198" text-anchor="middle" fill="#081022" font-size="14">DEDE</text>
+      </svg>
+    </div>
+
+  </div>
+
+  <!-- optional small footer note -->
+  <div style="margin-top:14px; color:#bcd6f2; font-size:0.95rem">Di buat dengan hati</div>
+
+  <!-- ------------ JavaScript ------------ -->
+  <script>
+    // 1) trik ngrok skip header: lakukan fetch sekali ke halaman dengan header
+    //    (ini bisa membantu bypass warning dalam beberapa kasus)
+    (function trySkipNgrok(){
+      try {
+        fetch(window.location.href, {
+          method: "GET",
+          headers: { "ngrok-skip-browser-warning": "true" }
+        }).catch(()=>{/* ignore */});
+      } catch(e){ /* ignore */ }
+    })();
+
+    // 2) buat konfeti secara dinamis (murni visual)
+    (function makeConfetti(){
+      const colors = ['#ff9aa2','#ffd27a','#9be7ff','#c7f9c3','#d8b4ff','#ffd6e0'];
+      const container = document.getElementById('confetti');
+      const COUNT = 24;
+      for(let i=0;i<COUNT;i++){
+        const s = document.createElement('span');
+        s.style.setProperty('--c', colors[i % colors.length]);
+        s.style.background = colors[i % colors.length];
+        s.style.left = Math.random()*100 + '%';
+        s.style.top = (Math.random()*-40) + '%';
+        s.style.width = (6 + Math.random()*10) + 'px';
+        s.style.height = (8 + Math.random()*12) + 'px';
+        s.style.opacity = 0.95;
+        s.style.animationDuration = (3.6 + Math.random()*3) + 's';
+        s.style.animationDelay = (Math.random()*4) + 's';
+        container.appendChild(s);
+      }
+    })();
+
+    // 3) kalau mau suara (opsional), tidak otomatis dimainkan agar tidak mengganggu
+    //    Uncomment dan ganti src jika kamu punya file suara pendek
+    /*
+    const audio = new Audio('selamat.mp3');
+    document.addEventListener('click', ()=> audio.play(), { once:true });
+    */
+
+    // 4) catatan: ganti nomor wa/tel pada link bila perlu
+  </script>
+</body>
+</html>
